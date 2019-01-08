@@ -7,6 +7,8 @@ public class Project {
     public static void main(String[] args) {
         reader = new Scanner(System.in);
         entry = new Entry(getUser(), getMessage());
+        entry.writeEntryToFile();
+        reader.close();
     }
 
     public static String getUser(){
