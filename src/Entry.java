@@ -1,25 +1,34 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Entry {
     FileWriter filewriter;
-    //    FileReader filereader;
     BufferedWriter writer;
-    //    BufferedReader reader;
     static String fileNameFormat = "Journal.txt";
     String username;
     String message;
 
-    public Entry(String username, String message) {
+    public Entry(String username, ArrayList<String> message) {
         this.username = username;
-        this.message = message;
+        this.message = Entry.toStringFromArray(message);
+    }
+
+    public static String toStringFromArray(ArrayList<String> array) {
+        String message = "";
+        array.remove(array.size() - 1);
+        for (String item : array) {
+            message += item;
+        }
+        return message;
     }
 
     public void writeEntryToFile(){
+        String fileDateFormat = "( " + Calendar.getInstance().getTime() + " )";
         try{
             filewriter = new FileWriter(this.username + fileNameFormat, true);
             writer = new BufferedWriter(filewriter);
-            writer.write(this.message + "\n");
+            writer.write(this.message + fileDateFormat + "\n");
             writer.close();
         }
         catch (IOException ex){
